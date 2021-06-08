@@ -37,6 +37,8 @@ const runTimer = () => {
   duration = duration - 300;
   console.log(duration, type, number_work);
   if (duration < 0) {
+    var audio = new Audio("ding.wav");
+    audio.play();
     countWork();
     setType();
     window.clearTimeout(timer);
