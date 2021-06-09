@@ -1,11 +1,15 @@
 // TIMER
 
-var duration = 3000;
 var type = "work";
 var number_work = 0;
 var timer;
 var running = false;
-var durations = { work: 3000, interval: 1000, break: 3000 };
+var durations = {
+  work: 25 * 60000,
+  small_break: 5 * 60000,
+  large_break: 15 * 60000,
+};
+var duration = durations.work;
 
 const setDuration = (type) => {
   return durations[type];
@@ -14,9 +18,9 @@ const setDuration = (type) => {
 const setType = () => {
   if (type === "work") {
     if (number_work < 4) {
-      type = "interval";
+      type = "small_break";
     } else {
-      type = "break";
+      type = "large_break";
     }
   } else {
     type = "work";
@@ -27,7 +31,7 @@ const countWork = () => {
   if (type === "work") {
     number_work++;
   } else {
-    if (type === "break") {
+    if (type === "large_break") {
       number_work = 0;
     }
   }
@@ -48,7 +52,7 @@ const runTimer = () => {
 };
 
 var now;
-browser.storage.local.set({ date: new Date() });
+// browser.storage.local.set({ date: new Date() });
 
 // function sendTime() {
 //  now = new Date()
@@ -68,20 +72,27 @@ browser.storage.local.set({ date: new Date() });
 var toBlock = [];
 
 function handleMessage(request, sender, sendResponse) {
-  if (sender.envType === "content_child") {
-    sendResponse(toBlock);
-  } else {
-    if (request.call === "getTime") {
+  switch (request.call) {
+    case "getTime":
       sendResponse({ type, duration, running });
-    }
-    if (request.call === "button") {
+      break;
+    case "button":
       if (running) {
         window.clearTimeout(timer);
       } else {
         timer = window.setInterval(runTimer, 300);
       }
       running = !running;
-    }
+      break;
+
+    case "getIntervals":
+      console.log(durations);
+      sendResponse(durations);
+      break;
+
+    case "setIntervals":
+      durations = request.values;
+      break;
   }
 }
 

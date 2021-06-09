@@ -1,16 +1,76 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <style media="screen">
+  <head>
+    <style media="screen">
       body {
-          min-width:50px;
+        min-width: 350px;
       }
-  </style>
-</head>
-<body>
-  <p id="type"></p>
-  <p id="timer"></p>
-  <button id="btn">Start</button>
-  <script src="small_win.js"></script>
-</body>
+      .time-changer {
+        display: grid;
+        grid-template-columns: auto auto;
+      }
+
+      .changer-label {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        padding: 0em 1em 0 0.4em;
+        font-size: 1em;
+      }
+      .time-setter {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        grid-column-start: 2;
+        grid-column-end: 3;
+      }
+
+      .pick-length {
+        padding: 0em 0.5em 0 0.5em;
+      }
+
+      .setter-button {
+        /* margin: 0.5em 0 0.5em 0; */
+        width: 2em;
+        height: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="type"></p>
+    <p id="timer"></p>
+    <button id="btn">Start</button>
+
+    <h2>Set times</h2>
+
+    <div class="time-changer">
+      <div class="changer-label">
+        <h3>Work length</h3>
+      </div>
+
+      <div class="time-setter">
+        <button class="setter-button" id="work-minus">-</button>
+        <p class="pick-length" id="work-time"></p>
+        <button class="setter-button" id="work-plus">+</button>
+      </div>
+      <div class="changer-label">
+        <h3>Small Break length</h3>
+      </div>
+      <div class="time-setter">
+        <button class="setter-button" id="small-break-minus">-</button>
+        <p class="pick-length" id="small-break-time"></p>
+        <button class="setter-button" id="small-break-plus">+</button>
+      </div>
+      <div class="changer-label">
+        <h3>Large Break length</h3>
+      </div>
+      <div class="time-setter">
+        <button class="setter-button" id="large-break-minus">-</button>
+        <p class="pick-length" id="large-break-time"></p>
+        <button class="setter-button" id="large-break-plus">+</button>
+      </div>
+    </div>
+
+    <button id="set-interval">Set</button>
+    <script src="small_win.js"></script>
+  </body>
 </html>
